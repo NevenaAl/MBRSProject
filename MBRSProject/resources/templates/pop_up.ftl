@@ -24,7 +24,7 @@ import * as types from "../../types/generated/types";
 
 const validationSchema = yup.object({
   <#list properties as property>
-  ${property.name}: yup.required("This field is required.").<#if property.type == "Integer" || property.type == "float">number<#elseif property.type == "String" || property.type == "LocalDate">string<#elseif property.type == "Boolean">boolean<#else>date</#if>()<#if property.type == "Integer" >.integer()</#if >,
+  ${property.name}: yup.<#if property.type == "double" || property.type == "float">number<#elseif property.type == "String" || property.type == "LocalDate">string<#elseif property.type == "Boolean">boolean<#else>string</#if>().required("This field is required.")<#if property.type == "Integer" >.integer().required("This field is required.")</#if >,
   </#list>
   <#list class.FMLinkedProperty as property>
   ${property.name}: <#if property.upper != -1 >yup.number().required("This field is required"),<#else >yup.required("This field is required").array().of(
@@ -73,10 +73,10 @@ const ${class.name}Popup: VFC<${class.name}PopupProps> = ({
         <DialogTitle>${class.name}</DialogTitle>
         <DialogContent>
         <#list properties as property>
-        <#if property.type == "String" || property.type == "Integer" || property.type == "float" || property.type == "LocalDate">
+        <#if property.type == "String" || property.type == "Integer" || property.type == "double" || property.type == "float" || property.type == "LocalDate">
         <TextField
             fullWidth
-            <#if property.type == "Integer" || property.type == "float" >
+            <#if property.type == "Integer" || property.type == "double" || property.type == "float" >
             type="number"
             </#if>
             error={formik.touched.${property.name} && Boolean(formik.errors.${property.name})}

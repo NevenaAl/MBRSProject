@@ -4,7 +4,7 @@
         <#list allProperties?keys as k>
             <#if k == class.name>
             <#list allProperties[k] as property>
-            ${property.name}: <#if property.type == "Integer" || property.type == "float">number<#elseif property.type == "String">string<#elseif property.type == "Boolean">boolean<#else>string</#if>,
+            ${property.name}: <#if property.type == "Integer" || property.type == "double">number<#elseif property.type == "String">string<#elseif property.type == "Boolean">boolean<#else>string</#if>,
             </#list>
             </#if>
         </#list>
