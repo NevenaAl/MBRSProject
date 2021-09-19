@@ -142,7 +142,6 @@ const ${class.name}Popup: VFC<${class.name}PopupProps> = ({
                 </MenuItem>
             ))}
             </Select>
-            <FormHelperText>Error</FormHelperText>
         </FormControl>
         </#if>
         </#list>
