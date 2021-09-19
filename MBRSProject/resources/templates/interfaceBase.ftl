@@ -1,6 +1,6 @@
-package com.example.demo.generated.interfaces;
+package com.example.beapp.generated.interfaces;
 
-import com.example.demo.generated.dtos.${class.name}DTO;
+import com.example.beapp.generated.dtos.${class.name}DTO;
 
 import java.util.*;
 

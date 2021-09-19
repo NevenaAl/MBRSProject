@@ -34,8 +34,8 @@ public class MyPlugin extends com.nomagic.magicdraw.plugins.Plugin {
 		configureGenerateOptionBE("ejbclass", "", "be-app.src.main.java.com.example.beapp.generated.models", "EJBGenerator");
 		configureGenerateOptionBE("service", "Service", "be-app.src.main.java.com.example.beapp.user.services", "EJBServiceGenerator");
 		configureGenerateOptionBE("serviceBase", "BaseService", "be-app.src.main.java.com.example.beapp.generated.services", "EJBServiceBaseGenerator");
-		configureGenerateOptionBE("controller", "sController", "be-app.src.main.java.com.example.beapp.user.controllers", "EJBControllerGenerator");
-		configureGenerateOptionBE("controllerBase", "sBaseController", "be-app.src.main.java.com.example.beapp.generated.controllers", "EJBControllerBaseGenerator");
+		configureGenerateOptionBE("controller", "Controller", "be-app.src.main.java.com.example.beapp.user.controllers", "EJBControllerGenerator");
+		configureGenerateOptionBE("controllerBase", "BaseController", "be-app.src.main.java.com.example.beapp.generated.controllers", "EJBControllerBaseGenerator");
 		configureGenerateOptionBE("interface", "Interface", "be-app.src.main.java.com.example.beapp.user.interfaces", "EJBInterfaceGenerator");
 		configureGenerateOptionBE("interfaceBase", "BaseInterface", "be-app.src.main.java.com.example.beapp.generated.interfaces", "EJBInterfaceBaseGenerator");
 		configureGenerateOptionBE("repository", "Repository", "be-app.src.main.java.com.example.beapp.user.repositories", "EJBRepositoryGenerator");

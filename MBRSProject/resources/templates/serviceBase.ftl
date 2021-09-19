@@ -1,9 +1,9 @@
-package com.example.demo.generated.services;
+package com.example.beapp.generated.services;
 
-import com.example.demo.generated.models.*;
-import com.example.demo.generated.dtos.*;
-import com.example.demo.user.repositories.*;
-import com.example.demo.user.interfaces.${class.name}Interface;
+import com.example.beapp.generated.models.*;
+import com.example.beapp.generated.dtos.*;
+import com.example.beapp.user.repositories.*;
+import com.example.beapp.user.interfaces.${class.name}Interface;
 import java.util.*;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -69,7 +69,7 @@ public class ${class.name}BaseService implements ${class.name}Interface {
 	
 	@Override
 	public boolean delete(Long id) {
-		${class.name}DTO ${class.name?uncap_first} = this.getOne(id);
+		${class.name}DTO ${class.name?uncap_first} = this.get(id);
 		if (${class.name?uncap_first} != null) {
 			this.${class.name?uncap_first}Repository.deleteById(id);
 			
@@ -81,7 +81,7 @@ public class ${class.name}BaseService implements ${class.name}Interface {
 	
 	@Override
 	public ${class.name}DTO update(Long id, ${class.name}DTO ${class.name?uncap_first}) {
-		${class.name}DTO old${class.name} = this.getOne(id);
+		${class.name}DTO old${class.name} = this.get(id);
 		
 		if(old${class.name} == null) {
 			return null;
@@ -91,8 +91,7 @@ public class ${class.name}BaseService implements ${class.name}Interface {
   		old${class.name}.set${property.name?cap_first}(${class.name?uncap_first}.get${property.name?cap_first}());
 		</#list>
 		
-		this.${class.name?uncap_first}Repository.save(old${class.name});
-		return ${class.name?uncap_first}.toDTO();
+		return this.create(old${class.name});
 
 	}
 }

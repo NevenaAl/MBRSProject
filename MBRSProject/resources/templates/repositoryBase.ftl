@@ -1,6 +1,6 @@
-package com.example.demo.generated.repositories;
+package com.example.beapp.generated.repositories;
 
-import com.example.demo.generated.models.*;
+import com.example.beapp.generated.models.*;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

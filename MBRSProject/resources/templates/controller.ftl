@@ -1,6 +1,6 @@
-package com.example.demo.user.controllers;
+package com.example.beapp.user.controllers;
 
-import com.example.demo.generated.controllers.*;
+import com.example.beapp.generated.controllers.*;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 

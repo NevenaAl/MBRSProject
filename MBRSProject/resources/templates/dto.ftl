@@ -1,4 +1,4 @@
-package com.example.demo.generated.dtos;
+package com.example.beapp.generated.dtos;
 
 import lombok.Data;
 import lombok.Builder;

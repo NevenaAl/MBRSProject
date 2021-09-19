@@ -1,11 +1,11 @@
-package com.example.demo.generated.models;
+package com.example.beapp.generated.models;
 
 import javax.persistence.*;
 import java.util.*;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
-import com.example.demo.generated.dtos.*;
+import com.example.beapp.generated.dtos.*;
 
 @Entity
 @Table
