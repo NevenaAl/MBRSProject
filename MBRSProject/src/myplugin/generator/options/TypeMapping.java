@@ -39,7 +39,5 @@ public class TypeMapping {
 	public void setLibraryName(String libraryName) {
 		this.libraryName = libraryName;
 	}
-	
-	
-	
+		
 }

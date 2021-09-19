@@ -4,8 +4,11 @@ import java.awt.event.ActionEvent;
 import java.io.BufferedWriter;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.io.UnsupportedEncodingException;
+import java.nio.file.*;
+import java.io.File;
 
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
@@ -18,20 +21,22 @@ import com.thoughtworks.xstream.io.xml.DomDriver;
 
 import myplugin.analyzer.AnalyzeException;
 import myplugin.analyzer.ModelAnalyzer;
-import myplugin.generator.EJBGenerator;
+import myplugin.generator.BasicGenerator;
 import myplugin.generator.fmmodel.FMModel;
 import myplugin.generator.options.GeneratorOptions;
 import myplugin.generator.options.ProjectOptions;
+import myplugin.utils.GeneratorHandler;
+import myplugin.utils.GeneratorMultipleHandler;
+import myplugin.utils.TreeCopyFileVisitor;
 
 /** Action that activate code generation */
 @SuppressWarnings("serial")
 class GenerateAction extends MDAction{
 	
-	
 	public GenerateAction(String name) {			
 		super("", name, null, null);		
 	}
-
+	
 	public void actionPerformed(ActionEvent evt) {
 		
 		if (Application.getInstance().getProject() == null) return;
@@ -39,45 +44,62 @@ class GenerateAction extends MDAction{
 		
 		if (root == null) return;
 	
-		ModelAnalyzer analyzer = new ModelAnalyzer(root, "ejb");	
-		
 		try {
-			analyzer.prepareModel();	
-			GeneratorOptions go = ProjectOptions.getProjectOptions().getGeneratorOptions().get("EJBGenerator");			
-			EJBGenerator generator = new EJBGenerator(go);
-			generator.generate();
-			/**  @ToDo: Also call other generators */ 
-			JOptionPane.showMessageDialog(null, "Code is successfully generated! Generated code is in folder: " + go.getOutputPath() +
-					                         ", package: " + go.getFilePackage());
-			exportToXml();
+			Path path = FileSystems.getDefault().getPath("plugins", "myplugin", "be-app");
+			String fromDirectory = path.toAbsolutePath().toString().replace('\\', '/');
+	        String toToDirectory = "c:/temp/be-app";
+			copyDirectoryFileVisitor(fromDirectory, toToDirectory);
+			
+			path = FileSystems.getDefault().getPath("plugins", "myplugin", "fe-app");
+			fromDirectory = path.toAbsolutePath().toString().replace('\\', '/');
+	        toToDirectory = "c:/temp/fe-app";
+			copyDirectoryFileVisitor(fromDirectory, toToDirectory);
+			
+			for (GeneratorOptions go : ProjectOptions.getProjectOptions().getGeneratorOptions().values()) {
+				if (go.getFilePackage().contains("user")) {
+					File directory = new File("c:/temp/" + go.getFilePackage().replace('.', '/'));
+					if (directory.isDirectory()) {
+						if (directory.list().length == 0) {
+							generateFiles(root, go);
+						}
+					} else {
+						generateFiles(root, go);
+					}
+				} else {
+					generateFiles(root, go);
+				}
+			}
+
+			JOptionPane.showMessageDialog(null, "Code is successfully generated!");
+
 		} catch (AnalyzeException e) {
 			JOptionPane.showMessageDialog(null, e.getMessage());
-		} 			
+		} catch (IOException e) {
+			JOptionPane.showMessageDialog(null, e.getMessage());
+		}
+	}
+
+	private void generateFiles(Package root, GeneratorOptions go) throws AnalyzeException {
+		if(go.getTemplateName() == "types" || go.getTemplateName() == "navbar") {
+			GeneratorHandler generator = new GeneratorHandler(go);
+			ModelAnalyzer analyzer = new ModelAnalyzer(root, go.getFilePackage());	
+			analyzer.prepareModel();
+
+			generator.generate();
+		}
+		else{
+			GeneratorMultipleHandler generator = new GeneratorMultipleHandler(go);
+			ModelAnalyzer analyzer = new ModelAnalyzer(root, go.getFilePackage());	
+			analyzer.prepareModel();
+
+			generator.generate();
+		}
 	}
 	
-	private void exportToXml() {
-		if (JOptionPane.showConfirmDialog(null, "Do you want to save FM Model?") == 
-			JOptionPane.OK_OPTION)
-		{	
-			JFileChooser jfc = new JFileChooser();
-			if (jfc.showSaveDialog(null) == JFileChooser.APPROVE_OPTION) {
-				String fileName = jfc.getSelectedFile().getAbsolutePath();
-			
-				XStream xstream = new XStream(new DomDriver());
-				BufferedWriter out;		
-				try {
-					out = new BufferedWriter(new OutputStreamWriter(
-							new FileOutputStream(fileName), "UTF8"));					
-					xstream.toXML(FMModel.getInstance().getClasses(), out);
-					xstream.toXML(FMModel.getInstance().getEnumerations(), out);
-					
-				} catch (UnsupportedEncodingException e) {
-					JOptionPane.showMessageDialog(null, e.getMessage());				
-				} catch (FileNotFoundException e) {
-					JOptionPane.showMessageDialog(null, e.getMessage());				
-				}		             
-			}
-		}	
-	}	  
+	public static void copyDirectoryFileVisitor(String source, String target)
+        throws IOException {
 
+        TreeCopyFileVisitor fileVisitor = new TreeCopyFileVisitor(source, target);
+        Files.walkFileTree(Paths.get(source), fileVisitor);
+    }
 }

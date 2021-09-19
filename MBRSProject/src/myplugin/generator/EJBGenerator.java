@@ -2,6 +2,7 @@ package myplugin.generator;
 
 import java.io.IOException;
 import java.io.Writer;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -11,6 +12,7 @@ import javax.swing.JOptionPane;
 import freemarker.template.TemplateException;
 import myplugin.generator.fmmodel.FMClass;
 import myplugin.generator.fmmodel.FMModel;
+import myplugin.generator.fmmodel.FMProperty;
 import myplugin.generator.options.GeneratorOptions;
 
 /**
@@ -41,6 +43,15 @@ public class EJBGenerator extends BasicGenerator {
 			FMClass cl = classes.get(i);
 			Writer out;
 			Map<String, Object> context = new HashMap<String, Object>();
+
+			ArrayList<String> imports = new ArrayList<>();
+			String import_str = "";
+			for(FMProperty p : cl.getFMLinkedProperty()){
+				import_str =  cl.getTypePackage() +"." + p.getType();
+				if(!imports.contains(import_str) && import_str != ""){
+					imports.add(import_str);
+				}
+			}
 			try {
 				out = getWriter(cl.getName(), cl.getTypePackage());
 				if (out != null) {
@@ -48,6 +59,7 @@ public class EJBGenerator extends BasicGenerator {
 					context.put("class", cl);
 					context.put("properties", cl.getProperties());
 					context.put("importedPackages", cl.getImportedPackages());
+					context.put("imports", imports);
 					getTemplate().process(context, out);
 					out.flush();
 				}
