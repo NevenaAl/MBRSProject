@@ -24,7 +24,7 @@ import * as types from "../../types/generated/types";
 
 const validationSchema = yup.object({
   <#list properties as property>
-  ${property.name}:yup.<#if property.type == "double" || property.type == "float">number<#elseif property.type == "String" || property.type == "LocalDate">string<#elseif property.type == "Boolean">boolean<#elseif property.type == "Integer" >integer<#else>string</#if >().required("This field is required."),
+  ${property.name}:yup.<#if property.type == "double" || property.type == "float" || property.type == "Integer">number<#elseif property.type == "String" || property.type == "LocalDate">string<#elseif property.type == "Boolean">boolean<#else>string</#if >().required("This field is required."),
   </#list>
   <#list class.FMLinkedProperty as property>
   ${property.name}: <#if property.upper != -1 >yup.number().required("This field is required"),<#else >yup.required("This field is required").array().of(
