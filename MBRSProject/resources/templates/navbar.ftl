@@ -11,6 +11,7 @@ const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
     width: "100%",
+    height:"100vh"
   },
 }));
 
@@ -21,7 +22,7 @@ const NavBar: React.VFC = () => {
   return (
     <React.Fragment>
       <div className={classes.root}>
-        <AppBar position="sticky" color="primary">
+        <AppBar position="sticky" style={{background:"#121232"}}>
           <Tabs
             value={location.pathname}
             variant="scrollable"

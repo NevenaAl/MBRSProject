@@ -27,8 +27,7 @@ const validationSchema = yup.object({
   ${property.name}:yup.<#if property.type == "double" || property.type == "float" || property.type == "Integer">number<#elseif property.type == "String" || property.type == "LocalDate">string<#elseif property.type == "Boolean">boolean<#else>string</#if >().required("This field is required."),
   </#list>
   <#list class.FMLinkedProperty as property>
-  ${property.name}: <#if property.upper != -1 >yup.number().required("This field is required"),<#else >yup.required("This field is required").array().of(
-    yup.number(),),</#if >
+  ${property.name}: <#if property.upper != -1 >yup.number().required("This field is required"),</#if >
   </#list>
 });
 

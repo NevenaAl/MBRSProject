@@ -109,6 +109,10 @@ public class ModelAnalyzer {
 			if (p.getOpposite() != null) {
                 FMLinkedProperty linkedProperty = getLinkedPropertyData(p, cl);
                 linkedProperty.setName(linkedProperty.getName().replace(" ", ""));
+                if(p.getLower()==1) {
+                	linkedProperty.setOptional(false);
+                }             	
+
                 fmClass.addLinkedProperty(linkedProperty);
             } else {
             	FMPersistentProperty prop = getPersistentPropertyData(p, cl);
