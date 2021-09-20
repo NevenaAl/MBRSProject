@@ -31,34 +31,25 @@ public class MyPlugin extends com.nomagic.magicdraw.plugins.Plugin {
 	}
 	
 	private void configureGenerateOptions() {
-		configureGenerateOptionBE("ejbclass", "", "be-app.src.main.java.com.example.beapp.generated.models", "EJBGenerator");
-		configureGenerateOptionBE("service", "Service", "be-app.src.main.java.com.example.beapp.user.services", "EJBServiceGenerator");
-		configureGenerateOptionBE("serviceBase", "BaseService", "be-app.src.main.java.com.example.beapp.generated.services", "EJBServiceBaseGenerator");
-		configureGenerateOptionBE("controller", "Controller", "be-app.src.main.java.com.example.beapp.user.controllers", "EJBControllerGenerator");
-		configureGenerateOptionBE("controllerBase", "BaseController", "be-app.src.main.java.com.example.beapp.generated.controllers", "EJBControllerBaseGenerator");
-		configureGenerateOptionBE("interface", "Interface", "be-app.src.main.java.com.example.beapp.user.interfaces", "EJBInterfaceGenerator");
-		configureGenerateOptionBE("interfaceBase", "BaseInterface", "be-app.src.main.java.com.example.beapp.generated.interfaces", "EJBInterfaceBaseGenerator");
-		configureGenerateOptionBE("repository", "Repository", "be-app.src.main.java.com.example.beapp.user.repositories", "EJBRepositoryGenerator");
-		configureGenerateOptionBE("repositoryBase", "BaseRepository", "be-app.src.main.java.com.example.beapp.generated.repositories", "EJBRepositoryBaseGenerator");
-		configureGenerateOptionBE("dto", "DTO", "be-app.src.main.java.com.example.beapp.generated.dtos", "EJBDTOGenerator");
-		configureGenerateOptionFE("types", "types", ".ts", "fe-app.src.types.generated", "EJBTypesGenerator");
-		configureGenerateOptionFE("serviceFrontend", "Service", ".ts", "fe-app.src.services.generated", "EJBServiceFrontedGenerator");
-		configureGenerateOptionFE("interfaceFrontend", "Props", ".ts", "fe-app.src.interfaces.generated", "EJBInterfaceFrontendGenerator");
-		configureGenerateOptionFE("navbar", "NavBar", ".tsx", "fe-app.src.components.generated", "EJBNavBarGenerator");
-		configureGenerateOptionFE("preview", "Preview", ".tsx", "fe-app.src.containers.generated", "EJBPreviewGenerator");
-		configureGenerateOptionFE("pop_up", "Popup", ".tsx", "fe-app.src.components.generated", "EJBPopupGenerator");
+		configureGenerateOption("ejbclass", "",".java", "be-app.src.main.java.com.example.beapp.generated.models", "EJBGenerator");
+		configureGenerateOption("service", "Service",".java", "be-app.src.main.java.com.example.beapp.user.services", "EJBServiceGenerator");
+		configureGenerateOption("serviceBase", "BaseService",".java", "be-app.src.main.java.com.example.beapp.generated.services", "EJBServiceBaseGenerator");
+		configureGenerateOption("controller", "Controller",".java", "be-app.src.main.java.com.example.beapp.user.controllers", "EJBControllerGenerator");
+		configureGenerateOption("controllerBase", "BaseController",".java", "be-app.src.main.java.com.example.beapp.generated.controllers", "EJBControllerBaseGenerator");
+		configureGenerateOption("interface", "Interface",".java", "be-app.src.main.java.com.example.beapp.user.interfaces", "EJBInterfaceGenerator");
+		configureGenerateOption("interfaceBase", "BaseInterface",".java", "be-app.src.main.java.com.example.beapp.generated.interfaces", "EJBInterfaceBaseGenerator");
+		configureGenerateOption("repository", "Repository",".java", "be-app.src.main.java.com.example.beapp.user.repositories", "EJBRepositoryGenerator");
+		configureGenerateOption("repositoryBase", "BaseRepository",".java", "be-app.src.main.java.com.example.beapp.generated.repositories", "EJBRepositoryBaseGenerator");
+		configureGenerateOption("dto", "DTO",".java", "be-app.src.main.java.com.example.beapp.generated.dtos", "EJBDTOGenerator");
+		configureGenerateOption("types", "types", ".ts", "fe-app.src.types.generated", "EJBTypesGenerator");
+		configureGenerateOption("serviceFrontend", "Service", ".ts", "fe-app.src.services.generated", "EJBServiceFrontedGenerator");
+		configureGenerateOption("interfaceFrontend", "Props", ".ts", "fe-app.src.interfaces.generated", "EJBInterfaceFrontendGenerator");
+		configureGenerateOption("navbar", "NavBar", ".tsx", "fe-app.src.components.generated", "EJBNavBarGenerator");
+		configureGenerateOption("preview", "Preview", ".tsx", "fe-app.src.containers.generated", "EJBPreviewGenerator");
+		configureGenerateOption("pop_up", "Popup", ".tsx", "fe-app.src.components.generated", "EJBPopupGenerator");
 	}
 	
-	private void configureGenerateOptionBE(String templateName, String generatedJavaFileTypeName, String generatedJavaFilePackage, String generatorOptionName) {
-		String generatedJavaFileName = "{0}" + generatedJavaFileTypeName + ".java";
-		
-		GeneratorOptions ejbOptions = new GeneratorOptions("c:/temp", templateName, "templates", generatedJavaFileName, true, generatedJavaFilePackage); 				
-		ProjectOptions.getProjectOptions().getGeneratorOptions().put(generatorOptionName, ejbOptions);
-				
-		ejbOptions.setTemplateDir(pluginDir + File.separator + ejbOptions.getTemplateDir()); //apsolutna putanja
-	}
-	
-	private void configureGenerateOptionFE(String templateName, String generatedFileTypeName, String generatedFileExtenstion, String generatedFilePackage, String generatorOptionName) {
+	private void configureGenerateOption(String templateName, String generatedFileTypeName, String generatedFileExtenstion, String generatedFilePackage, String generatorOptionName) {
 		String generatedFileName = "{0}" + generatedFileTypeName + generatedFileExtenstion;
 		
 		GeneratorOptions ejbOptions = new GeneratorOptions("c:/temp", templateName, "templates", generatedFileName, true, generatedFilePackage); 				
